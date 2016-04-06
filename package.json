@@ -1,0 +1,29 @@
+{
+  "name": "react-native-simple-picker",
+  "version": "0.0.1",
+  "description": "A simple picker for React Native using PickerIOS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/puredazzle/react-native-simple-picker.git"
+  },
+  "keywords": [
+    "React-Native",
+    "Picker",
+    "PickerIOS"
+  ],
+  "author": "Chris A",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/puredazzle/react-native-simple-picker/issues"
+  },
+  "homepage": "https://github.com/puredazzle/react-native-simple-picker#readme",
+  "devDependencies": {
+    "eslint": "^2.7.0",
+    "eslint-config-airbnb": "^6.2.0",
+    "eslint-plugin-react": "^4.2.3"
+  }
+}
