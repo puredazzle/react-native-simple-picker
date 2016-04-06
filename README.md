@@ -2,7 +2,8 @@
 
 A simple IOSPicker for React Native written in ES6.
 
-![alt tag](https://raw.githubusercontent.com/puredazzle/react-native-simple-picker/master/example.gif)
+
+[<img src="https://cloud.githubusercontent.com/assets/499192/14314055/79b56344-fbf5-11e5-9813-66a2d2a040c7.gif" width="350">](https://cloud.githubusercontent.com/assets/499192/14314055/79b56344-fbf5-11e5-9813-66a2d2a040c7.gif)
 
 ## Install
 
