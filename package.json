@@ -17,6 +17,9 @@
   ],
   "author": "Chris A",
   "license": "MIT",
+  "files": [
+    "index.js"
+  ],
   "bugs": {
     "url": "https://github.com/puredazzle/react-native-simple-picker/issues"
   },
