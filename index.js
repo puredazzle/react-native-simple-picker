@@ -93,7 +93,7 @@ class SimplePicker extends React.Component {
   }
 
   renderItem(option, index) {
-    const label = this.props.labels[index] || option;
+    const label = (this.props.labels) ? this.props.labels[index] : option;
     return (
       <PickerItemIOS
         key={option}
