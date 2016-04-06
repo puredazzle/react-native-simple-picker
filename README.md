@@ -1,2 +1,2 @@
-# react-native-simple-picker
+# React Native Simple Picker
 A simple IOSPicker for React Native
