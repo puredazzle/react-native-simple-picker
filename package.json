@@ -1,6 +1,6 @@
 {
   "name": "react-native-simple-picker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple picker for React Native using PickerIOS",
   "main": "index.js",
   "scripts": {
