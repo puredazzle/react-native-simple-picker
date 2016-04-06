@@ -1,7 +1,7 @@
 {
   "name": "react-native-simple-picker",
-  "version": "0.0.3",
-  "description": "A simple picker for React Native using PickerIOS",
+  "version": "1.0.0",
+  "description": "A simple iOS picker for React Native",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
