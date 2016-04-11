@@ -87,6 +87,12 @@ class ExampleApp extends Component {
           ref={'picker2'}
           options={options}
           labels={labels}
+          itemStyle={{
+            fontSize: 25,
+            color: 'red',
+            textAlign: 'left',
+            fontWeight: 'bold',
+          }}
           onSubmit={(option) => {
             this.setState({
               selectedOption: option,

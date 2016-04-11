@@ -46,6 +46,7 @@ const propTypes = {
   buttonColor: PropTypes.string,
   options: PropTypes.array.isRequired,
   labels: PropTypes.array,
+  itemStyle: PropTypes.object,
   onSubmit: PropTypes.func,
 };
 
@@ -105,6 +106,7 @@ class SimplePicker extends React.Component {
 
   render() {
     const { buttonColor } = this.state;
+    const itemStyle = this.props.itemStyle || {};
 
     return (
       <Modal
@@ -134,6 +136,7 @@ class SimplePicker extends React.Component {
                 style={styles.bottomPicker}
                 selectedValue={this.state.selectedOption}
                 onValueChange={(option) => this.onValueChange(option)}
+                itemStyle={itemStyle}
               >
                 {this.props.options.map((option, index) => this.renderItem(option, index))}
               </PickerIOS>
