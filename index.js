@@ -1,13 +1,5 @@
-import React, {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Modal,
-  PickerIOS,
-  Dimensions,
-  PropTypes,
-} from 'react-native';
+import React, { Component, PropTypes } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View, Modal, PickerIOS, Dimensions } from 'react-native'
 
 const PickerItemIOS = PickerIOS.Item;
 
@@ -50,7 +42,7 @@ const propTypes = {
   onSubmit: PropTypes.func,
 };
 
-class SimplePicker extends React.Component {
+class SimplePicker extends Component {
   constructor(props) {
     super(props);
 
@@ -110,7 +102,7 @@ class SimplePicker extends React.Component {
 
     return (
       <Modal
-        animated
+        animationType={"slide"}
         transparent
         visible={this.state.modalVisible}
       >
