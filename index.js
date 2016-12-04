@@ -72,10 +72,22 @@ class SimplePicker extends Component {
   }
 
   componentWillReceiveProps(props) {
-    // FIXES A SIMPLE BUG WHEN OPTIONS ARE PROVIDED DYNAMICALLY, SELECTED OPTION IS UNDEFINED
-    if(props.options && props.options.length > 0 && ! this.state.selectedOption) {
+    // If options are changing, and our current selected option is not part of
+    // the new options, update it.
+    if(
+      props.options
+      && props.options.length > 0
+      && props.options.indexOf(this.state.selectedOption) == -1
+    ) {
+      const previousOption = this.state.selectedOption;
       this.setState({
         selectedOption : props.options[0]
+      }, () => {
+        // Options array changed and the previously selected option is not present anymore.
+        // Should call onSubmit function to tell parent to handle the change too.
+        if(previousOption) {
+          this.onPressSubmit();
+        }
       });
     }
   }
