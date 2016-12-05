@@ -1,16 +1,16 @@
 import React, {
-	Component,
-	PropTypes,
+  Component,
+  PropTypes,
 } from 'react';
 
 import {
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-	Modal,
-	PickerIOS,
-	Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Modal,
+  PickerIOS,
+  Dimensions,
 } from 'react-native';
 
 const PickerItemIOS = PickerIOS.Item;
@@ -50,6 +50,8 @@ const propTypes = {
   buttonColor: PropTypes.string,
   options: PropTypes.array.isRequired,
   labels: PropTypes.array,
+  confirmText : PropTypes.string,
+  cancelText : PropTypes.string,
   itemStyle: PropTypes.object,
   onSubmit: PropTypes.func,
 };
@@ -67,6 +69,27 @@ class SimplePicker extends Component {
     this.onPressCancel = this.onPressCancel.bind(this);
     this.onPressSubmit = this.onPressSubmit.bind(this);
     this.onValueChange = this.onValueChange.bind(this);
+  }
+
+  componentWillReceiveProps(props) {
+    // If options are changing, and our current selected option is not part of
+    // the new options, update it.
+    if(
+      props.options
+      && props.options.length > 0
+      && props.options.indexOf(this.state.selectedOption) == -1
+    ) {
+      const previousOption = this.state.selectedOption;
+      this.setState({
+        selectedOption : props.options[0]
+      }, () => {
+        // Options array changed and the previously selected option is not present anymore.
+        // Should call onSubmit function to tell parent to handle the change too.
+        if(previousOption) {
+          this.onPressSubmit();
+        }
+      });
+    }
   }
 
   onPressCancel() {
@@ -111,7 +134,6 @@ class SimplePicker extends Component {
   render() {
     const { buttonColor } = this.state;
     const itemStyle = this.props.itemStyle || {};
-
     return (
       <Modal
         animationType={'slide'}
@@ -123,13 +145,13 @@ class SimplePicker extends Component {
             <View style={styles.buttonView}>
               <TouchableOpacity onPress={this.onPressCancel}>
                 <Text style={{ color: buttonColor }}>
-                  Cancel
+                  {this.props.cancelText || 'Cancel'}
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={this.onPressSubmit}>
                 <Text style={{ color: buttonColor }}>
-                  Confirm
+                  {this.props.confirmText || 'Confirm'}
                 </Text>
               </TouchableOpacity>
             </View>
