@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
 
 const propTypes = {
   buttonColor: PropTypes.string,
+  buttonStyle: PropTypes.object,
   options: PropTypes.array.isRequired,
   labels: PropTypes.array,
   confirmText : PropTypes.string,
@@ -144,13 +145,13 @@ class SimplePicker extends Component {
           <View style={styles.modalContainer}>
             <View style={styles.buttonView}>
               <TouchableOpacity onPress={this.onPressCancel}>
-                <Text style={{ color: buttonColor }}>
+                <Text style={[{ color: buttonColor }, this.props.buttonStyle]}>
                   {this.props.cancelText || 'Cancel'}
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={this.onPressSubmit}>
-                <Text style={{ color: buttonColor }}>
+                <Text style={[{ color: buttonColor }, this.props.buttonStyle]}>
                   {this.props.confirmText || 'Confirm'}
                 </Text>
               </TouchableOpacity>
