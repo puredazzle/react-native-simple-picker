@@ -8,6 +8,6 @@
   "dependencies": {
     "react": "^0.14.8",
     "react-native": "^0.36.1",
-    "react-native-simple-picker": "^1.2.0"
+    "react-native-simple-picker": "*"
   }
 }
