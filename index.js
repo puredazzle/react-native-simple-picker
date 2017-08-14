@@ -50,8 +50,8 @@ const propTypes = {
   buttonStyle: PropTypes.object,
   options: PropTypes.array.isRequired,
   labels: PropTypes.array,
-  confirmText : PropTypes.string,
-  cancelText : PropTypes.string,
+  confirmText: PropTypes.string,
+  cancelText: PropTypes.string,
   itemStyle: PropTypes.object,
   onSubmit: PropTypes.func,
 };
@@ -73,18 +73,18 @@ class SimplePicker extends Component {
   componentWillReceiveProps(props) {
     // If options are changing, and our current selected option is not part of
     // the new options, update it.
-    if(
+    if (
       props.options
       && props.options.length > 0
       && props.options.indexOf(this.state.selectedOption) == -1
     ) {
       const previousOption = this.state.selectedOption;
       this.setState({
-        selectedOption : props.options[0]
+        selectedOption: props.options[0],
       }, () => {
         // Options array changed and the previously selected option is not present anymore.
         // Should call onSubmit function to tell parent to handle the change too.
-        if(previousOption) {
+        if (previousOption) {
           this.onPressSubmit();
         }
       });
@@ -131,25 +131,27 @@ class SimplePicker extends Component {
   }
 
   render() {
-    const itemStyle = this.props.itemStyle || {};
+    const { modalVisible, selectedOption } = this.state;
+    const { options, buttonStyle, itemStyle, cancelText, confirmText } = this.props;
+
     return (
       <Modal
         animationType={'slide'}
         transparent
-        visible={this.state.modalVisible}
+        visible={modalVisible}
       >
         <View style={styles.basicContainer}>
           <View style={styles.modalContainer}>
             <View style={styles.buttonView}>
               <TouchableOpacity onPress={this.onPressCancel}>
-                <Text style={this.props.buttonStyle}>
-                  {this.props.cancelText || 'Cancel'}
+                <Text style={buttonStyle}>
+                  {cancelText || 'Cancel'}
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={this.onPressSubmit}>
-                <Text style={this.props.buttonStyle}>
-                  {this.props.confirmText || 'Confirm'}
+                <Text style={buttonStyle}>
+                  {confirmText || 'Confirm'}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -158,11 +160,11 @@ class SimplePicker extends Component {
               <PickerIOS
                 ref={'picker'}
                 style={styles.bottomPicker}
-                selectedValue={this.state.selectedOption}
+                selectedValue={selectedOption}
                 onValueChange={(option) => this.onValueChange(option)}
                 itemStyle={itemStyle}
               >
-                {this.props.options.map((option, index) => this.renderItem(option, index))}
+                {options.map((option, index) => this.renderItem(option, index))}
               </PickerIOS>
             </View>
 
