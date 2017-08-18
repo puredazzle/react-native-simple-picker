@@ -53,145 +53,153 @@ const styles = StyleSheet.create({
 });
 
 const propTypes = {
-	buttonStyle: PropTypes.object,
-	options: PropTypes.array.isRequired,
-	labels: PropTypes.array,
-	confirmText: PropTypes.string,
-	cancelText: PropTypes.string,
-	itemStyle: PropTypes.object,
-	onSubmit: PropTypes.func,
+  buttonColor: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  options: PropTypes.array.isRequired,
+  initialOptionIndex: PropTypes.number,
+  labels: PropTypes.array,
+  confirmText: PropTypes.string,
+  cancelText: PropTypes.string,
+  itemStyle: PropTypes.object,
+  onSubmit: PropTypes.func,
 	overlayClose: PropTypes.bool
 };
 
 class SimplePicker extends Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.state = {
-			modalVisible: false,
-			selectedOption: this.props.options[0],
-		};
+    const selected = this.props.initialOptionIndex || 0;
 
-		this.onPressCancel = this.onPressCancel.bind(this);
-		this.onPressSubmit = this.onPressSubmit.bind(this);
-		this.onValueChange = this.onValueChange.bind(this);
-		this.overlayDismiss = this.overlayDismiss.bind(this);
-	}
+    this.state = {
+      modalVisible: false,
+      selectedOption: this.props.options[selected],
+    };
 
-	componentWillReceiveProps(props) {
-		// If options are changing, and our current selected option is not part of
-		// the new options, update it.
-		if (
-			props.options
-			&& props.options.length > 0
-			&& props.options.indexOf(this.state.selectedOption) == -1
-		) {
-			const previousOption = this.state.selectedOption;
-			this.setState({
-				selectedOption: props.options[0],
-			}, () => {
-				// Options array changed and the previously selected option is not present anymore.
-				// Should call onSubmit function to tell parent to handle the change too.
-				if (previousOption) {
-					this.onPressSubmit();
-				}
-			});
-		}
-	}
+    this.onPressCancel = this.onPressCancel.bind(this);
+    this.onPressSubmit = this.onPressSubmit.bind(this);
+    this.onValueChange = this.onValueChange.bind(this);
+    this.overlayDismiss = this.overlayDismiss.bind(this);
 
-	onPressCancel() {
-		this.setState({
-			modalVisible: false,
-		});
-	}
+    if ('buttonColor' in props) {
+      console.warn('buttonColor as a prop is deprecated, please use buttonStyle instead.');
+    }
+  }
 
-	onPressSubmit() {
-		if (this.props.onSubmit) {
-			this.props.onSubmit(this.state.selectedOption);
-		}
+  componentWillReceiveProps(props) {
+    // If options are changing, and our current selected option is not part of
+    // the new options, update it.
+    if (
+      props.options
+      && props.options.length > 0
+      && props.options.indexOf(this.state.selectedOption) == -1
+    ) {
+      const previousOption = this.state.selectedOption;
+      this.setState({
+        selectedOption: props.options[0],
+      }, () => {
+        // Options array changed and the previously selected option is not present anymore.
+        // Should call onSubmit function to tell parent to handle the change too.
+        if (previousOption) {
+          this.onPressSubmit();
+        }
+      });
+    }
+  }
 
-		this.setState({
-			modalVisible: false,
-		});
-	}
+  onPressCancel() {
+    this.setState({
+      modalVisible: false,
+    });
+  }
 
-	onValueChange(option) {
-		this.setState({
-			selectedOption: option,
-		});
-	}
+  onPressSubmit() {
+    if (this.props.onSubmit) {
+      this.props.onSubmit(this.state.selectedOption);
+    }
 
-	overlayDismiss() {
+    this.setState({
+      modalVisible: false,
+    });
+  }
+  
+  overlayDismiss() {
 		if(this.props.overlayClose){
 			this.onPressCancel();
 		}
 	}
 
-	show() {
-		this.setState({
-			modalVisible: true,
-		});
-	}
+  onValueChange(option) {
+    this.setState({
+      selectedOption: option,
+    });
+  }
 
-	renderItem(option, index) {
-		const label = (this.props.labels) ? this.props.labels[index] : option;
-		return (
-			<PickerItemIOS
-				key={option}
-				value={option}
-				label={label}
-			/>
-		);
-	}
+  show() {
+    this.setState({
+      modalVisible: true,
+    });
+  }
 
-	render() {
-		const { modalVisible, selectedOption } = this.state;
-		const { options, buttonStyle, itemStyle, cancelText, confirmText } = this.props;
+  renderItem(option, index) {
+    const label = (this.props.labels) ? this.props.labels[index] : option;
+    return (
+      <PickerItemIOS
+        key={option}
+        value={option}
+        label={label}
+      />
+    );
+  }
 
-		return (
-			<Modal
-				animationType={'slide'}
-				transparent
-				visible={modalVisible}
-			>
-				<View style={styles.basicContainer}>
-					<View style={styles.overlayContainer}>
+  render() {
+    const { modalVisible, selectedOption } = this.state;
+    const { options, buttonStyle, itemStyle, cancelText, confirmText } = this.props;
+
+    return (
+      <Modal
+        animationType={'slide'}
+        transparent
+        visible={modalVisible}
+      >
+        <View style={styles.basicContainer}>
+          <View style={styles.overlayContainer}>
 						<TouchableWithoutFeedback onPress={this.overlayDismiss}>
 							<View style={styles.overlayContainer}></View>
 						</TouchableWithoutFeedback>
 					</View>
-					<View style={styles.modalContainer}>
-						<View style={styles.buttonView}>
-							<TouchableOpacity onPress={this.onPressCancel}>
-								<Text style={buttonStyle}>
-									{cancelText || 'Cancel'}
-								</Text>
-							</TouchableOpacity>
+          <View style={styles.modalContainer}>
+            <View style={styles.buttonView}>
+              <TouchableOpacity onPress={this.onPressCancel}>
+                <Text style={buttonStyle}>
+                  {cancelText || 'Cancel'}
+                </Text>
+              </TouchableOpacity>
 
-							<TouchableOpacity onPress={this.onPressSubmit}>
-								<Text style={buttonStyle}>
-									{confirmText || 'Confirm'}
-								</Text>
-							</TouchableOpacity>
-						</View>
+              <TouchableOpacity onPress={this.onPressSubmit}>
+                <Text style={buttonStyle}>
+                  {confirmText || 'Confirm'}
+                </Text>
+              </TouchableOpacity>
+            </View>
 
-						<View style={styles.mainBox}>
-							<PickerIOS
-								ref={'picker'}
-								style={styles.bottomPicker}
-								selectedValue={selectedOption}
-								onValueChange={(option) => this.onValueChange(option)}
-								itemStyle={itemStyle}
-							>
-								{options.map((option, index) => this.renderItem(option, index))}
-							</PickerIOS>
-						</View>
+            <View style={styles.mainBox}>
+              <PickerIOS
+                ref={'picker'}
+                style={styles.bottomPicker}
+                selectedValue={selectedOption}
+                onValueChange={(option) => this.onValueChange(option)}
+                itemStyle={itemStyle}
+              >
+                {options.map((option, index) => this.renderItem(option, index))}
+              </PickerIOS>
+            </View>
 
-					</View>
-				</View>
-			</Modal>
-		);
-	}
+          </View>
+        </View>
+      </Modal>
+    );
+  }
 }
 
 SimplePicker.propTypes = propTypes;
