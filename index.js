@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
 const propTypes = {
   buttonStyle: PropTypes.object,
   options: PropTypes.array.isRequired,
+  initialOptionIndex: PropTypes.number,
   labels: PropTypes.array,
   confirmText: PropTypes.string,
   cancelText: PropTypes.string,
@@ -60,9 +61,11 @@ class SimplePicker extends Component {
   constructor(props) {
     super(props);
 
+    const selected = this.props.initialOptionIndex || 0;
+
     this.state = {
       modalVisible: false,
-      selectedOption: this.props.options[0],
+      selectedOption: this.props.options[selected],
     };
 
     this.onPressCancel = this.onPressCancel.bind(this);
