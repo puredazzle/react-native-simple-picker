@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
 });
 
 const propTypes = {
+  buttonColor: PropTypes.string,
   buttonStyle: PropTypes.object,
   options: PropTypes.array.isRequired,
   initialOptionIndex: PropTypes.number,
@@ -71,6 +72,10 @@ class SimplePicker extends Component {
     this.onPressCancel = this.onPressCancel.bind(this);
     this.onPressSubmit = this.onPressSubmit.bind(this);
     this.onValueChange = this.onValueChange.bind(this);
+
+    if ('buttonColor' in props) {
+      console.warn('buttonColor as a prop is deprecated, please use buttonStyle instead.');
+    }
   }
 
   componentWillReceiveProps(props) {
