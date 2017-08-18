@@ -1,17 +1,17 @@
 import React, {
-	Component,
-	PropTypes,
+  Component,
+  PropTypes,
 } from 'react';
 
 import {
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-	Modal,
-	PickerIOS,
-	Dimensions,
-	TouchableWithoutFeedback
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Modal,
+  PickerIOS,
+  Dimensions,
+  TouchableWithoutFeedback
 } from 'react-native';
 
 const PickerItemIOS = PickerIOS.Item;
@@ -19,37 +19,37 @@ const PickerItemIOS = PickerIOS.Item;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
-	basicContainer: {
-		flex: 1,
-		justifyContent: 'flex-end',
-		alignItems: 'center',
-	},
+  basicContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
 
-	overlayContainer: {
-		flex: 1,
-		width: SCREEN_WIDTH
-	},
+  overlayContainer: {
+    flex: 1,
+    width: SCREEN_WIDTH
+  },
 
-	modalContainer: {
-		width: SCREEN_WIDTH,
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: 0,
-		backgroundColor: '#F5FCFF',
-	},
+  modalContainer: {
+    width: SCREEN_WIDTH,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 0,
+    backgroundColor: '#F5FCFF',
+  },
 
-	buttonView: {
-		width: SCREEN_WIDTH,
-		padding: 8,
-		borderTopWidth: 0.5,
-		borderTopColor: 'lightgrey',
-		justifyContent: 'space-between',
-		flexDirection: 'row',
-	},
+  buttonView: {
+    width: SCREEN_WIDTH,
+    padding: 8,
+    borderTopWidth: 0.5,
+    borderTopColor: 'lightgrey',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
 
-	bottomPicker: {
-		width: SCREEN_WIDTH,
-	},
+  bottomPicker: {
+    width: SCREEN_WIDTH,
+  },
 });
 
 const propTypes = {
@@ -62,7 +62,7 @@ const propTypes = {
   cancelText: PropTypes.string,
   itemStyle: PropTypes.object,
   onSubmit: PropTypes.func,
-	overlayClose: PropTypes.bool
+  overlayClose: PropTypes.bool
 };
 
 class SimplePicker extends Component {
@@ -122,12 +122,12 @@ class SimplePicker extends Component {
       modalVisible: false,
     });
   }
-  
-  overlayDismiss() {
-		if(this.props.overlayClose){
-			this.onPressCancel();
-		}
-	}
+
+  overlayDismiss(){
+    if(this.props.overlayClose) {
+      this.onPressCancel();
+    }
+  }
 
   onValueChange(option) {
     this.setState({
@@ -164,10 +164,10 @@ class SimplePicker extends Component {
       >
         <View style={styles.basicContainer}>
           <View style={styles.overlayContainer}>
-						<TouchableWithoutFeedback onPress={this.overlayDismiss}>
-							<View style={styles.overlayContainer}></View>
-						</TouchableWithoutFeedback>
-					</View>
+            <TouchableWithoutFeedback onPress={this.overlayDismiss}>
+              <View style={styles.overlayContainer}></View>
+            </TouchableWithoutFeedback>
+          </View>
           <View style={styles.modalContainer}>
             <View style={styles.buttonView}>
               <TouchableOpacity onPress={this.onPressCancel}>
