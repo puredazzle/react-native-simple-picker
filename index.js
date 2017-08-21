@@ -11,7 +11,7 @@ import {
   Modal,
   PickerIOS,
   Dimensions,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 const PickerItemIOS = PickerIOS.Item;
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 
   overlayContainer: {
     flex: 1,
-    width: SCREEN_WIDTH
+    width: SCREEN_WIDTH,
   },
 
   modalContainer: {
@@ -62,7 +62,7 @@ const propTypes = {
   cancelText: PropTypes.string,
   itemStyle: PropTypes.object,
   onSubmit: PropTypes.func,
-  overlayClose: PropTypes.bool
+  disableOverlay: PropTypes.bool,
 };
 
 class SimplePicker extends Component {
@@ -79,7 +79,7 @@ class SimplePicker extends Component {
     this.onPressCancel = this.onPressCancel.bind(this);
     this.onPressSubmit = this.onPressSubmit.bind(this);
     this.onValueChange = this.onValueChange.bind(this);
-    this.overlayDismiss = this.overlayDismiss.bind(this);
+    this.onOverlayDismiss = this.onOverlayDismiss.bind(this);
 
     if ('buttonColor' in props) {
       console.warn('buttonColor as a prop is deprecated, please use buttonStyle instead.');
@@ -92,7 +92,7 @@ class SimplePicker extends Component {
     if (
       props.options
       && props.options.length > 0
-      && props.options.indexOf(this.state.selectedOption) == -1
+      && props.options.indexOf(this.state.selectedOption) === -1
     ) {
       const previousOption = this.state.selectedOption;
       this.setState({
@@ -108,9 +108,7 @@ class SimplePicker extends Component {
   }
 
   onPressCancel() {
-    this.setState({
-      modalVisible: false,
-    });
+    this.hide();
   }
 
   onPressSubmit() {
@@ -118,15 +116,11 @@ class SimplePicker extends Component {
       this.props.onSubmit(this.state.selectedOption);
     }
 
-    this.setState({
-      modalVisible: false,
-    });
+    this.hide();
   }
 
-  overlayDismiss(){
-    if(this.props.overlayClose) {
-      this.onPressCancel();
-    }
+  onOverlayDismiss() {
+    this.hide();
   }
 
   onValueChange(option) {
@@ -141,8 +135,15 @@ class SimplePicker extends Component {
     });
   }
 
+  hide() {
+    this.setState({
+      modalVisible: false,
+    });
+  }
+
   renderItem(option, index) {
     const label = (this.props.labels) ? this.props.labels[index] : option;
+
     return (
       <PickerItemIOS
         key={option}
@@ -154,7 +155,14 @@ class SimplePicker extends Component {
 
   render() {
     const { modalVisible, selectedOption } = this.state;
-    const { options, buttonStyle, itemStyle, cancelText, confirmText } = this.props;
+    const {
+			options,
+			buttonStyle,
+			itemStyle,
+			cancelText,
+			confirmText,
+			disableOverlay,
+		} = this.props;
 
     return (
       <Modal
@@ -163,11 +171,13 @@ class SimplePicker extends Component {
         visible={modalVisible}
       >
         <View style={styles.basicContainer}>
-          <View style={styles.overlayContainer}>
-            <TouchableWithoutFeedback onPress={this.overlayDismiss}>
-              <View style={styles.overlayContainer}></View>
-            </TouchableWithoutFeedback>
-          </View>
+					{!disableOverlay &&
+						<View style={styles.overlayContainer}>
+							<TouchableWithoutFeedback onPress={this.onOverlayDismiss}>
+								<View style={styles.overlayContainer} />
+							</TouchableWithoutFeedback>
+						</View>
+					}
           <View style={styles.modalContainer}>
             <View style={styles.buttonView}>
               <TouchableOpacity onPress={this.onPressCancel}>
@@ -182,7 +192,6 @@ class SimplePicker extends Component {
                 </Text>
               </TouchableOpacity>
             </View>
-
             <View style={styles.mainBox}>
               <PickerIOS
                 ref={'picker'}
@@ -194,7 +203,6 @@ class SimplePicker extends Component {
                 {options.map((option, index) => this.renderItem(option, index))}
               </PickerIOS>
             </View>
-
           </View>
         </View>
       </Modal>
