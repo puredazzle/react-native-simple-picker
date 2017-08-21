@@ -11,6 +11,7 @@ import {
   Modal,
   PickerIOS,
   Dimensions,
+  TouchableWithoutFeedback
 } from 'react-native';
 
 const PickerItemIOS = PickerIOS.Item;
@@ -22,6 +23,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
+  },
+
+  overlayContainer: {
+    flex: 1,
+    width: SCREEN_WIDTH
   },
 
   modalContainer: {
@@ -56,6 +62,7 @@ const propTypes = {
   cancelText: PropTypes.string,
   itemStyle: PropTypes.object,
   onSubmit: PropTypes.func,
+  overlayClose: PropTypes.bool
 };
 
 class SimplePicker extends Component {
@@ -72,6 +79,7 @@ class SimplePicker extends Component {
     this.onPressCancel = this.onPressCancel.bind(this);
     this.onPressSubmit = this.onPressSubmit.bind(this);
     this.onValueChange = this.onValueChange.bind(this);
+    this.overlayDismiss = this.overlayDismiss.bind(this);
 
     if ('buttonColor' in props) {
       console.warn('buttonColor as a prop is deprecated, please use buttonStyle instead.');
@@ -115,6 +123,12 @@ class SimplePicker extends Component {
     });
   }
 
+  overlayDismiss(){
+    if(this.props.overlayClose) {
+      this.onPressCancel();
+    }
+  }
+
   onValueChange(option) {
     this.setState({
       selectedOption: option,
@@ -149,6 +163,11 @@ class SimplePicker extends Component {
         visible={modalVisible}
       >
         <View style={styles.basicContainer}>
+          <View style={styles.overlayContainer}>
+            <TouchableWithoutFeedback onPress={this.overlayDismiss}>
+              <View style={styles.overlayContainer}></View>
+            </TouchableWithoutFeedback>
+          </View>
           <View style={styles.modalContainer}>
             <View style={styles.buttonView}>
               <TouchableOpacity onPress={this.onPressCancel}>
