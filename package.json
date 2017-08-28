@@ -28,5 +28,8 @@
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
     "eslint-plugin-react": "^4.2.3"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.10"
   }
 }
