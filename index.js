@@ -10,12 +10,10 @@ import {
   TouchableOpacity,
   View,
   Modal,
-  PickerIOS,
+  Picker,
   Dimensions,
   TouchableWithoutFeedback,
 } from 'react-native';
-
-const PickerItemIOS = PickerIOS.Item;
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -64,6 +62,7 @@ const propTypes = {
   itemStyle: PropTypes.object,
   onSubmit: PropTypes.func,
   disableOverlay: PropTypes.bool,
+	modalVisible: PropTypes.string,
 };
 
 class SimplePicker extends Component {
@@ -73,7 +72,7 @@ class SimplePicker extends Component {
     const selected = this.props.initialOptionIndex || 0;
 
     this.state = {
-      modalVisible: false,
+      modalVisible: PropTypes.modalVisible || false,
       selectedOption: this.props.options[selected],
     };
 
@@ -146,7 +145,7 @@ class SimplePicker extends Component {
     const label = (this.props.labels) ? this.props.labels[index] : option;
 
     return (
-      <PickerItemIOS
+      <Picker.Item
         key={option}
         value={option}
         label={label}
@@ -194,7 +193,7 @@ class SimplePicker extends Component {
               </TouchableOpacity>
             </View>
             <View style={styles.mainBox}>
-              <PickerIOS
+              <Picker
                 ref={'picker'}
                 style={styles.bottomPicker}
                 selectedValue={selectedOption}
@@ -202,7 +201,7 @@ class SimplePicker extends Component {
                 itemStyle={itemStyle}
               >
                 {options.map((option, index) => this.renderItem(option, index))}
-              </PickerIOS>
+              </Picker>
             </View>
           </View>
         </View>
