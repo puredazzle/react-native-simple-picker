@@ -17,7 +17,7 @@ import {
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const styles = StyleSheet.create({
+const styles = {
   basicContainer: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -27,6 +27,10 @@ const styles = StyleSheet.create({
   overlayContainer: {
     flex: 1,
     width: SCREEN_WIDTH,
+  },
+
+  mainBox: {
+   // Can be used by <SimplePicker styles={{ mainBox:{...} }}/>
   },
 
   modalContainer: {
@@ -49,34 +53,39 @@ const styles = StyleSheet.create({
   bottomPicker: {
     width: SCREEN_WIDTH,
   },
-});
+};
 
 const propTypes = {
   buttonColor: PropTypes.string,
   buttonStyle: PropTypes.object,
-  options: PropTypes.array.isRequired,
-  initialOptionIndex: PropTypes.number,
-  labels: PropTypes.array,
-  confirmText: PropTypes.string,
   cancelText: PropTypes.string,
-  itemStyle: PropTypes.object,
-  onSubmit: PropTypes.func,
+  confirmText: PropTypes.string,
   disableOverlay: PropTypes.bool,
-	modalVisible: PropTypes.string,
+  initialOptionIndex: PropTypes.number,
+  itemStyle: PropTypes.object,
+  labels: PropTypes.array,
+  modalVisible: PropTypes.string,
+  onSubmit: PropTypes.func,
+	options: PropTypes.array.isRequired,
+	styles: PropTypes.object,
 };
 
 class SimplePicker extends Component {
-  constructor(props) {
+	static defaultProps = {
+		styles: {}
+	};
+	constructor(props) {
     super(props);
 
-    const selected = this.props.initialOptionIndex || 0;
+    const selected = props.initialOptionIndex || 0;
 
     this.state = {
-      modalVisible: PropTypes.modalVisible || false,
-      selectedOption: this.props.options[selected],
+      modalVisible: props.modalVisible || false,
+      selectedOption: props.options[selected],
     };
+		this.styles = StyleSheet.create({...styles, ...props.styles});
 
-    this.onPressCancel = this.onPressCancel.bind(this);
+		this.onPressCancel = this.onPressCancel.bind(this);
     this.onPressSubmit = this.onPressSubmit.bind(this);
     this.onValueChange = this.onValueChange.bind(this);
     this.onOverlayDismiss = this.onOverlayDismiss.bind(this);
@@ -170,16 +179,16 @@ class SimplePicker extends Component {
         transparent
         visible={modalVisible}
       >
-        <View style={styles.basicContainer}>
+        <View style={this.styles.basicContainer}>
 					{!disableOverlay &&
-						<View style={styles.overlayContainer}>
+						<View style={this.styles.overlayContainer}>
 							<TouchableWithoutFeedback onPress={this.onOverlayDismiss}>
-								<View style={styles.overlayContainer} />
+								<View style={this.styles.overlayContainer} />
 							</TouchableWithoutFeedback>
 						</View>
 					}
-          <View style={styles.modalContainer}>
-            <View style={styles.buttonView}>
+          <View style={this.styles.modalContainer}>
+            <View style={this.styles.buttonView}>
               <TouchableOpacity onPress={this.onPressCancel}>
                 <Text style={buttonStyle}>
                   {cancelText || 'Cancel'}
@@ -192,10 +201,10 @@ class SimplePicker extends Component {
                 </Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.mainBox}>
+            <View style={this.styles.mainBox}>
               <Picker
                 ref={'picker'}
-                style={styles.bottomPicker}
+                style={this.styles.bottomPicker}
                 selectedValue={selectedOption}
                 onValueChange={(option) => this.onValueChange(option)}
                 itemStyle={itemStyle}
