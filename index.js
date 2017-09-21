@@ -64,7 +64,7 @@ const propTypes = {
   initialOptionIndex: PropTypes.number,
   itemStyle: PropTypes.object,
   labels: PropTypes.array,
-  modalVisible: PropTypes.string,
+  modalVisible: PropTypes.bool,
   onSubmit: PropTypes.func,
 	options: PropTypes.array.isRequired,
 	styles: PropTypes.object,
