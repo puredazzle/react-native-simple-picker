@@ -1,6 +1,6 @@
 # React Native Simple Picker
 
-A simple iOS picker for React Native.
+A simple picker for React Native.
 
 [![Latest Version](https://img.shields.io/npm/v/react-native-simple-picker.svg)](https://www.npmjs.com/package/react-native-simple-picker)
 [![Total Downloads](https://img.shields.io/npm/dt/react-native-simple-picker.svg)](https://www.npmjs.com/package/react-native-simple-picker)
@@ -13,6 +13,10 @@ A simple iOS picker for React Native.
 ```
 $ npm install react-native-simple-picker --save
 ```
+
+## iOS and Android
+
+From version 2.0 React Native Simple Picker now supports both Android and iOS.
 
 ## Example
 
