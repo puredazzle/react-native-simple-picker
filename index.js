@@ -1,6 +1,4 @@
-import React, {
-	Component,
-} from 'react';
+import React, { Component } from 'react'; // eslint-disable-line
 
 import PropTypes from 'prop-types';
 
@@ -13,7 +11,7 @@ import {
 	Picker,
 	Dimensions,
 	TouchableWithoutFeedback,
-} from 'react-native';
+} from 'react-native'; // eslint-disable-line
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -71,13 +69,9 @@ const propTypes = {
 	styles: PropTypes.object,
 };
 
-const booleanIsSet = (variable) => variable || String(variable) === 'false'
+const booleanIsSet = variable => variable || String(variable) === 'false';
 
 class SimplePicker extends Component {
-	static defaultProps = {
-		styles: {}
-	};
-
 	constructor(props) {
 		super(props);
 
@@ -87,16 +81,16 @@ class SimplePicker extends Component {
 			modalVisible: props.modalVisible || false,
 			selectedOption: props.options[selected],
 		};
-		this.styles = StyleSheet.create({ ...styles, ...props.styles });
+
+		this.styles = StyleSheet.create({
+			...styles,
+			...props.styles,
+		});
 
 		this.onPressCancel = this.onPressCancel.bind(this);
 		this.onPressSubmit = this.onPressSubmit.bind(this);
 		this.onValueChange = this.onValueChange.bind(this);
 		this.onOverlayDismiss = this.onOverlayDismiss.bind(this);
-
-		if ('buttonColor' in props) {
-			console.warn('buttonColor as a prop is deprecated, please use buttonStyle instead.');
-		}
 	}
 
 	componentWillReceiveProps(props) {
@@ -118,10 +112,11 @@ class SimplePicker extends Component {
 				}
 			});
 		}
+
 		if (booleanIsSet(props.modalVisible)) {
 			this.setState({
-				modalVisible: props.modalVisible
-			})
+				modalVisible: props.modalVisible,
+			});
 		}
 	}
 
@@ -129,6 +124,7 @@ class SimplePicker extends Component {
 		if (this.props.onCancel) {
 			this.props.onCancel(this.state.selectedOption);
 		}
+
 		this.hide();
 	}
 
@@ -144,6 +140,7 @@ class SimplePicker extends Component {
 		if (this.props.onCancel) {
 			this.props.onCancel(this.state.selectedOption);
 		}
+
 		this.hide();
 	}
 
@@ -218,10 +215,9 @@ class SimplePicker extends Component {
 						</View>
 						<View style={this.styles.mainBox}>
 							<Picker
-								ref={'picker'}
 								style={this.styles.bottomPicker}
 								selectedValue={selectedOption}
-								onValueChange={(option) => this.onValueChange(option)}
+								onValueChange={option => this.onValueChange(option)}
 								itemStyle={itemStyle}
 							>
 								{options.map((option, index) => this.renderItem(option, index))}
@@ -233,6 +229,10 @@ class SimplePicker extends Component {
 		);
 	}
 }
+
+SimplePicker.defaultProps = {
+	styles: {},
+};
 
 SimplePicker.propTypes = propTypes;
 
