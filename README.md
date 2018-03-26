@@ -27,6 +27,7 @@ You will find an example in the `/exampleApp` folder.
 | Prop  | Default  | Type | Description | Required |
 | :------------ |:---------------:| :---------------:| :-----| :-----|
 | buttonStyle | - | `Object` | Style Close/Continue Buttons | `false` |
+| headerStyle | - | `Object` | Style for the header bar | `false` |
 | options | - | `Array` | Options that will be passed to the picker | `true`
 | initialOptionIndex | - | `Number` | Initial selected option based on it's index | `false`
 | labels | - | `Array` | Labels for the options passed to the picker | `false`
