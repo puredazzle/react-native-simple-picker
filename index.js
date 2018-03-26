@@ -159,7 +159,8 @@ class SimplePicker extends Component {
     const { modalVisible, selectedOption } = this.state;
     const {
 			options,
-			buttonStyle,
+      buttonStyle,
+      headerStyle,
 			itemStyle,
 			cancelText,
 			confirmText,
