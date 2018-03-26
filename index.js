@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
 
-  buttonView: {
+  header: {
     width: SCREEN_WIDTH,
     padding: 8,
     borderTopWidth: 0.5,
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
 const propTypes = {
   buttonColor: PropTypes.string,
   buttonStyle: PropTypes.object,
+  headerStyle: PropTypes.object,
   options: PropTypes.array.isRequired,
   initialOptionIndex: PropTypes.number,
   labels: PropTypes.array,
@@ -180,7 +181,7 @@ class SimplePicker extends Component {
 						</View>
 					}
           <View style={styles.modalContainer}>
-            <View style={styles.buttonView}>
+            <View style={[styles.header, headerStyle]}>
               <TouchableOpacity onPress={this.onPressCancel}>
                 <Text style={buttonStyle}>
                   {cancelText || 'Cancel'}
