@@ -33,7 +33,7 @@ You will find an example in the `/exampleApp` folder.
 | confirmText | Confirm | `String` | Confirm button text | `false`
 | cancelText | Cancel | `String` | Cancel button text | `false`
 | itemStyle | - | `Object` | Picker style prop. Use this to customize the picker colors, etc | `false`
-| styles | - | `Object` | Overwrites the default [styles](/blob/master/index.js#L18-L54) of the picker  | `false`
+| styles | - | `Object` | Overwrites the default [styles](/index.js#L18-L54) of the picker  | `false`
 | disableOverlay | - | `bool` | When set to false it will dismiss the picker when the outside region is pressed | `false`
 
 ## Events 
