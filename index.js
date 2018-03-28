@@ -15,58 +15,52 @@ import {
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const styles = {
-	basicContainer: {
-		flex: 1,
-		justifyContent: 'flex-end',
-		alignItems: 'center',
-	},
+const styles = StyleSheet.create({
+  basicContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
 
-	overlayContainer: {
-		flex: 1,
-		width: SCREEN_WIDTH,
-	},
+  overlayContainer: {
+    flex: 1,
+    width: SCREEN_WIDTH,
+  },
 
-	mainBox: {
-		// Can be used by <SimplePicker styles={{ mainBox:{...} }}/>
-	},
+  modalContainer: {
+    width: SCREEN_WIDTH,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 0,
+    backgroundColor: '#F5FCFF',
+  },
 
-	modalContainer: {
-		width: SCREEN_WIDTH,
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: 0,
-		backgroundColor: '#F5FCFF',
-	},
+  header: {
+    width: SCREEN_WIDTH,
+    padding: 8,
+    borderTopWidth: 0.5,
+    borderTopColor: 'lightgrey',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
 
-	buttonView: {
-		width: SCREEN_WIDTH,
-		padding: 8,
-		borderTopWidth: 0.5,
-		borderTopColor: 'lightgrey',
-		justifyContent: 'space-between',
-		flexDirection: 'row',
-	},
-
-	bottomPicker: {
-		width: SCREEN_WIDTH,
-	},
-};
+  bottomPicker: {
+    width: SCREEN_WIDTH,
+  },
+});
 
 const propTypes = {
-	buttonColor: PropTypes.string,
-	buttonStyle: PropTypes.object,
-	cancelText: PropTypes.string,
-	confirmText: PropTypes.string,
-	disableOverlay: PropTypes.bool,
-	initialOptionIndex: PropTypes.number,
-	itemStyle: PropTypes.object,
-	labels: PropTypes.array,
-	modalVisible: PropTypes.bool,
-	onCancel: PropTypes.func,
-	onSubmit: PropTypes.func,
-	options: PropTypes.array.isRequired,
-	styles: PropTypes.object,
+  buttonColor: PropTypes.string,
+  buttonStyle: PropTypes.object,
+  headerStyle: PropTypes.object,
+  options: PropTypes.array.isRequired,
+  initialOptionIndex: PropTypes.number,
+  labels: PropTypes.array,
+  confirmText: PropTypes.string,
+  cancelText: PropTypes.string,
+  itemStyle: PropTypes.object,
+  onSubmit: PropTypes.func,
+  disableOverlay: PropTypes.bool,
 };
 
 const booleanIsSet = variable => variable || String(variable) === 'false';
@@ -178,7 +172,8 @@ class SimplePicker extends Component {
 		const { modalVisible, selectedOption } = this.state;
 		const {
 			options,
-			buttonStyle,
+      buttonStyle,
+      headerStyle,
 			itemStyle,
 			cancelText,
 			confirmText,
@@ -199,35 +194,36 @@ class SimplePicker extends Component {
 						</TouchableWithoutFeedback>
 					</View>
 					}
-					<View style={this.styles.modalContainer}>
-						<View style={this.styles.buttonView}>
-							<TouchableOpacity onPress={this.onPressCancel}>
-								<Text style={buttonStyle}>
-									{cancelText || 'Cancel'}
-								</Text>
-							</TouchableOpacity>
+          <View style={styles.modalContainer}>
+            <View style={[styles.header, headerStyle]}>
+              <TouchableOpacity onPress={this.onPressCancel}>
+                <Text style={buttonStyle}>
+                  {cancelText || 'Cancel'}
+                </Text>
+              </TouchableOpacity>
 
-							<TouchableOpacity onPress={this.onPressSubmit}>
-								<Text style={buttonStyle}>
-									{confirmText || 'Confirm'}
-								</Text>
-							</TouchableOpacity>
-						</View>
-						<View style={this.styles.mainBox}>
-							<Picker
-								style={this.styles.bottomPicker}
-								selectedValue={selectedOption}
-								onValueChange={option => this.onValueChange(option)}
-								itemStyle={itemStyle}
-							>
-								{options.map((option, index) => this.renderItem(option, index))}
-							</Picker>
-						</View>
-					</View>
-				</View>
-			</Modal>
-		);
-	}
+              <TouchableOpacity onPress={this.onPressSubmit}>
+                <Text style={buttonStyle}>
+                  {confirmText || 'Confirm'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.mainBox}>
+              <PickerIOS
+                ref={'picker'}
+                style={styles.bottomPicker}
+                selectedValue={selectedOption}
+                onValueChange={(option) => this.onValueChange(option)}
+                itemStyle={itemStyle}
+              >
+                {options.map((option, index) => this.renderItem(option, index))}
+              </PickerIOS>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    );
+  }
 }
 
 SimplePicker.defaultProps = {
