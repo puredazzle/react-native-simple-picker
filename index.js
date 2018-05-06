@@ -118,6 +118,16 @@ class SimplePicker extends Component {
 				modalVisible: props.modalVisible,
 			});
 		}
+
+		// Update current selected option if initialOptionIndex is updated
+		if (
+			props.options
+			&& props.initialOptionIndex
+			&& (props.options[props.initialOptionIndex] !== this.state.selectedOption)
+		) {
+			const updatedOptionIndex = props.initialOptionIndex;
+			this.setState({ selectedOption: props.options[updatedOptionIndex] });
+		}
 	}
 
 	onPressCancel() {
