@@ -80,6 +80,7 @@ class SimplePicker extends Component {
 		this.state = {
 			modalVisible: props.modalVisible || false,
 			selectedOption: props.options[selected],
+			userChanged: false,
 		};
 
 		this.styles = StyleSheet.create({
@@ -94,6 +95,7 @@ class SimplePicker extends Component {
 	}
 
 	componentWillReceiveProps(props) {
+		const previousOption = this.state.selectedOption;
 		// If options are changing, and our current selected option is not part of
 		// the new options, update it.
 		if (
@@ -101,7 +103,6 @@ class SimplePicker extends Component {
 			&& props.options.length > 0
 			&& props.options.indexOf(this.state.selectedOption) === -1
 		) {
-			const previousOption = this.state.selectedOption;
 			this.setState({
 				selectedOption: props.options[0],
 			}, () => {
@@ -116,6 +117,23 @@ class SimplePicker extends Component {
 		if (booleanIsSet(props.modalVisible)) {
 			this.setState({
 				modalVisible: props.modalVisible,
+			});
+		}
+
+		// Update current selected option if initialOptionIndex is updated
+		if (
+			props.options
+			&& props.initialOptionIndex
+			&& (props.options[props.initialOptionIndex] !== this.state.selectedOption)
+			&& !this.state.userChanged
+		) {
+			const updatedOptionIndex = props.initialOptionIndex;
+			this.setState({
+				selectedOption: props.options[updatedOptionIndex],
+			}, () => {
+				if (previousOption) {
+					this.onPressSubmit();
+				}
 			});
 		}
 	}
@@ -147,6 +165,7 @@ class SimplePicker extends Component {
 	onValueChange(option) {
 		this.setState({
 			selectedOption: option,
+			userChanged: true,
 		});
 	}
 
