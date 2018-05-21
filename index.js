@@ -93,17 +93,24 @@ class SimplePicker extends Component {
 		this.onOverlayDismiss = this.onOverlayDismiss.bind(this);
 	}
 
-	componentWillReceiveProps(props) {
-		// If options are changing, and our current selected option is not part of
-		// the new options, update it.
+	componentWillReceiveProps(nextProps) {
+		// If initial option index is changed we need to update the code.
+		if (nextProps.initialOptionIndex !== this.props.initialOptionIndex) {
+			this.setState({
+				selectedOption: nextProps.options[nextProps.initialOptionIndex || 0],
+			});
+		}
+
+		// If options are updated and our current selected option
+		// is not part of the new options.
 		if (
-			props.options
-			&& props.options.length > 0
-			&& props.options.indexOf(this.state.selectedOption) === -1
+			nextProps.options
+			&& nextProps.options.length > 0
+			&& nextProps.options.indexOf(this.state.selectedOption) === -1
 		) {
 			const previousOption = this.state.selectedOption;
 			this.setState({
-				selectedOption: props.options[0],
+				selectedOption: nextProps.options[nextProps.initialOptionIndex || 0],
 			}, () => {
 				// Options array changed and the previously selected option is not present anymore.
 				// Should call onSubmit function to tell parent to handle the change too.
@@ -113,9 +120,9 @@ class SimplePicker extends Component {
 			});
 		}
 
-		if (booleanIsSet(props.modalVisible)) {
+		if (booleanIsSet(nextProps.modalVisible)) {
 			this.setState({
-				modalVisible: props.modalVisible,
+				modalVisible: nextProps.modalVisible,
 			});
 		}
 	}
