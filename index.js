@@ -57,7 +57,9 @@ const propTypes = {
 	buttonColor: PropTypes.string,
 	buttonStyle: PropTypes.object,
 	cancelText: PropTypes.string,
+  cancelTextStyle: PropTypes.object,
 	confirmText: PropTypes.string,
+  confirmTextStyle: PropTypes.object,
 	disableOverlay: PropTypes.bool,
 	initialOptionIndex: PropTypes.number,
 	itemStyle: PropTypes.object,
@@ -188,7 +190,9 @@ class SimplePicker extends Component {
 			buttonStyle,
 			itemStyle,
 			cancelText,
+      cancelTextStyle,
 			confirmText,
+      confirmTextStyle,
 			disableOverlay,
 		} = this.props;
 
@@ -209,13 +213,13 @@ class SimplePicker extends Component {
 					<View style={this.styles.modalContainer}>
 						<View style={this.styles.buttonView}>
 							<TouchableOpacity onPress={this.onPressCancel}>
-								<Text style={buttonStyle}>
+								<Text style={[buttonStyle, cancelTextStyle]}>
 									{cancelText || 'Cancel'}
 								</Text>
 							</TouchableOpacity>
 
 							<TouchableOpacity onPress={this.onPressSubmit}>
-								<Text style={buttonStyle}>
+								<Text style={[buttonStyle, confirmTextStyle]}>
 									{confirmText || 'Confirm'}
 								</Text>
 							</TouchableOpacity>

@@ -31,7 +31,9 @@ You will find an example in the `/exampleApp` folder.
 | initialOptionIndex | - | `Number` | Initial selected option based on it's index | `false`
 | labels | - | `Array` | Labels for the options passed to the picker | `false`
 | confirmText | Confirm | `String` | Confirm button text | `false`
+| confirmTextStyle | - | `Object` | Style Confirm button text | `false`
 | cancelText | Cancel | `String` | Cancel button text | `false`
+| cancelTextStyle | - | `Object` | Style Close button text | `false`
 | itemStyle | - | `Object` | Picker style prop. Use this to customize the picker colors, etc | `false`
 | styles | - | `Object` | Overwrites the default [styles](/index.js#L18-L54) of the picker  | `false`
 | disableOverlay | - | `bool` | When set to false it will dismiss the picker when the outside region is pressed | `false`
