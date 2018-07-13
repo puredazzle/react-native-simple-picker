@@ -11,20 +11,21 @@ import {
 	Picker,
 	Dimensions,
 	TouchableWithoutFeedback,
+  Animated,
 } from 'react-native'; // eslint-disable-line
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT
+} = Dimensions.get('window');
 
 const styles = {
-	basicContainer: {
-		flex: 1,
-		justifyContent: 'flex-end',
-		alignItems: 'center',
-	},
-
 	overlayContainer: {
-		flex: 1,
+	  zIndex: -1,
 		width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    backgroundColor: '#000',
+    opacity: 0.3,
 	},
 
 	mainBox: {
@@ -82,6 +83,7 @@ class SimplePicker extends Component {
 		this.state = {
 			modalVisible: props.modalVisible || false,
 			selectedOption: props.options[selected],
+      translateY: new Animated.Value(0),
 		};
 
 		this.styles = StyleSheet.create({
@@ -163,12 +165,17 @@ class SimplePicker extends Component {
 		this.setState({
 			modalVisible: true,
 		});
+    Animated.timing(
+      this.state.translateY,
+      { toValue: -250 }
+    ).start();
 	}
 
 	hide() {
-		this.setState({
-			modalVisible: false,
-		});
+    Animated.timing(
+      this.state.translateY,
+      { toValue: 0 }
+    ).start(() => this.setState({ modalVisible: false }));
 	}
 
 	renderItem(option, index) {
@@ -184,7 +191,7 @@ class SimplePicker extends Component {
 	}
 
 	render() {
-		const { modalVisible, selectedOption } = this.state;
+		const { modalVisible, selectedOption, translateY } = this.state;
 		const {
 			options,
 			buttonStyle,
@@ -196,48 +203,43 @@ class SimplePicker extends Component {
 			disableOverlay,
 		} = this.props;
 
-		return (
-			<Modal
-				animationType={'slide'}
-				transparent
-				visible={modalVisible}
-			>
-				<View style={this.styles.basicContainer}>
-					{!disableOverlay &&
-					<View style={this.styles.overlayContainer}>
-						<TouchableWithoutFeedback onPress={this.onOverlayDismiss}>
-							<View style={this.styles.overlayContainer}/>
-						</TouchableWithoutFeedback>
-					</View>
-					}
-					<View style={this.styles.modalContainer}>
-						<View style={this.styles.buttonView}>
-							<TouchableOpacity onPress={this.onPressCancel}>
-								<Text style={[buttonStyle, cancelTextStyle]}>
-									{cancelText || 'Cancel'}
-								</Text>
-							</TouchableOpacity>
+    const transformStyle = {
+      transform: [{ translateY }]
+    };
 
-							<TouchableOpacity onPress={this.onPressSubmit}>
-								<Text style={[buttonStyle, confirmTextStyle]}>
-									{confirmText || 'Confirm'}
-								</Text>
-							</TouchableOpacity>
-						</View>
-						<View style={this.styles.mainBox}>
-							<Picker
-								style={this.styles.bottomPicker}
-								selectedValue={selectedOption}
-								onValueChange={option => this.onValueChange(option)}
-								itemStyle={itemStyle}
-							>
-								{options.map((option, index) => this.renderItem(option, index))}
-							</Picker>
-						</View>
-					</View>
-				</View>
-			</Modal>
-		);
+    return (
+      <Modal transparent={true} visible={this.state.modalVisible}>
+        {!disableOverlay &&
+        <TouchableWithoutFeedback onPress={this.onOverlayDismiss}>
+          <View style={this.styles.overlayContainer}/>
+        </TouchableWithoutFeedback>
+        }
+        <Animated.View style={[this.styles.modalContainer, transformStyle]}>
+          <View style={this.styles.buttonView}>
+            <TouchableOpacity onPress={this.onPressCancel}>
+              <Text style={[buttonStyle, cancelTextStyle]}>
+                {cancelText || 'Cancel'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.onPressSubmit}>
+              <Text style={[buttonStyle, confirmTextStyle]}>
+                {confirmText || 'Confirm'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={this.styles.mainBox}>
+            <Picker
+              style={this.styles.bottomPicker}
+              selectedValue={selectedOption}
+              onValueChange={this.onValueChange}
+              itemStyle={itemStyle}
+            >
+              {options.map((option, index) => this.renderItem(option, index))}
+            </Picker>
+          </View>
+        </Animated.View>
+      </Modal>
+    );
 	}
 }
 
