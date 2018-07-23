@@ -201,6 +201,7 @@ class SimplePicker extends Component {
 				animationType={'slide'}
 				transparent
 				visible={modalVisible}
+        onRequestClose={this.onPressCancel}
 			>
 				<View style={this.styles.basicContainer}>
 					{!disableOverlay &&
