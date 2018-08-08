@@ -1,34 +1,25 @@
-# OSX
-#
-.DS_Store
-
-# Xcode
-#
-build/
-*.pbxuser
-!default.pbxuser
-*.mode1v3
 !default.mode1v3
-*.mode2v3
 !default.mode2v3
-*.perspectivev3
+!default.pbxuser
 !default.perspectivev3
-xcuserdata
-*.xccheckout
-*.moved-aside
-DerivedData
+.DS_Store
+.gradle
+.idea
 *.hmap
 *.ipa
+*.mode1v3
+*.mode2v3
+*.moved-aside
+*.pbxuser
+*.perspectivev3
+*.xccheckout
 *.xcuserstate
-project.xcworkspace
-
-# Android/IJ
-#
-.idea
-.gradle
+build/
+DerivedData
 local.properties
-
-# node.js
-#
-node_modules/
+node_modules
 npm-debug.log
+package-lock.json
+project.xcworkspace
+xcuserdata
+yarn.lock
