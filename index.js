@@ -58,9 +58,9 @@ const propTypes = {
 	buttonColor: PropTypes.string,
 	buttonStyle: PropTypes.object,
 	cancelText: PropTypes.string,
-  cancelTextStyle: PropTypes.object,
+	cancelTextStyle: PropTypes.object,
 	confirmText: PropTypes.string,
-  confirmTextStyle: PropTypes.object,
+	confirmTextStyle: PropTypes.object,
 	disableOverlay: PropTypes.bool,
 	initialOptionIndex: PropTypes.number,
 	itemStyle: PropTypes.object,
@@ -191,57 +191,57 @@ class SimplePicker extends Component {
 			buttonStyle,
 			itemStyle,
 			cancelText,
-      cancelTextStyle,
+			cancelTextStyle,
 			confirmText,
-      confirmTextStyle,
+			confirmTextStyle,
 			disableOverlay,
 		} = this.props;
 
 		return (
 			<SafeAreaView>
-			<Modal
-				animationType={'slide'}
-				transparent
-				visible={modalVisible}
-        onRequestClose={this.onPressCancel}
-			  supportedOrientations={['portrait', 'landscape']}
-			>
-				<View style={this.styles.basicContainer}>
-					{!disableOverlay &&
-					<View style={this.styles.overlayContainer}>
-						<TouchableWithoutFeedback onPress={this.onOverlayDismiss}>
-							<View style={this.styles.overlayContainer}/>
-						</TouchableWithoutFeedback>
-					</View>
-					}
-					<View style={this.styles.modalContainer}>
-						<View style={this.styles.buttonView}>
-							<TouchableOpacity onPress={this.onPressCancel}>
-								<Text style={[buttonStyle, cancelTextStyle]}>
-									{cancelText || 'Cancel'}
-								</Text>
-							</TouchableOpacity>
+				<Modal
+					animationType={'slide'}
+					transparent
+					visible={modalVisible}
+					onRequestClose={this.onPressCancel}
+					supportedOrientations={['portrait', 'landscape']}
+				>
+					<View style={this.styles.basicContainer}>
+						{!disableOverlay &&
+							<View style={this.styles.overlayContainer}>
+								<TouchableWithoutFeedback onPress={this.onOverlayDismiss}>
+									<View style={this.styles.overlayContainer}/>
+								</TouchableWithoutFeedback>
+							</View>
+						}
+						<View style={this.styles.modalContainer}>
+							<View style={this.styles.buttonView}>
+								<TouchableOpacity onPress={this.onPressCancel}>
+									<Text style={[buttonStyle, cancelTextStyle]}>
+										{cancelText || 'Cancel'}
+									</Text>
+								</TouchableOpacity>
 
-							<TouchableOpacity onPress={this.onPressSubmit}>
-								<Text style={[buttonStyle, confirmTextStyle]}>
-									{confirmText || 'Confirm'}
-								</Text>
-							</TouchableOpacity>
-						</View>
-						<View style={this.styles.mainBox}>
-							<Picker
-								style={this.styles.bottomPicker}
-								selectedValue={selectedOption}
-								onValueChange={option => this.onValueChange(option)}
-								itemStyle={itemStyle}
-							>
-								{options.map((option, index) => this.renderItem(option, index))}
-							</Picker>
+								<TouchableOpacity onPress={this.onPressSubmit}>
+									<Text style={[buttonStyle, confirmTextStyle]}>
+										{confirmText || 'Confirm'}
+									</Text>
+								</TouchableOpacity>
+							</View>
+							<View style={this.styles.mainBox}>
+								<Picker
+									style={this.styles.bottomPicker}
+									selectedValue={selectedOption}
+									onValueChange={option => this.onValueChange(option)}
+									itemStyle={itemStyle}
+								>
+									{options.map((option, index) => this.renderItem(option, index))}
+								</Picker>
+							</View>
 						</View>
 					</View>
-				</View>
-			</Modal>
-		</SafeAreaView>
+				</Modal>
+			</SafeAreaView>
 		);
 	}
 }
