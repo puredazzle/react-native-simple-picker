@@ -11,6 +11,7 @@ import {
 	Picker,
 	Dimensions,
 	TouchableWithoutFeedback,
+	SafeAreaView,
 } from 'react-native'; // eslint-disable-line
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -24,7 +25,7 @@ const styles = {
 
 	overlayContainer: {
 		flex: 1,
-		width: SCREEN_WIDTH,
+		width: '100%',
 	},
 
 	mainBox: {
@@ -32,7 +33,7 @@ const styles = {
 	},
 
 	modalContainer: {
-		width: SCREEN_WIDTH,
+		width: '100%',
 		justifyContent: 'center',
 		alignItems: 'center',
 		padding: 0,
@@ -40,7 +41,7 @@ const styles = {
 	},
 
 	buttonView: {
-		width: SCREEN_WIDTH,
+		width: '100%',
 		padding: 8,
 		borderTopWidth: 0.5,
 		borderTopColor: 'lightgrey',
@@ -197,11 +198,13 @@ class SimplePicker extends Component {
 		} = this.props;
 
 		return (
+			<SafeAreaView>
 			<Modal
 				animationType={'slide'}
 				transparent
 				visible={modalVisible}
         onRequestClose={this.onPressCancel}
+			  supportedOrientations={['portrait', 'landscape']}
 			>
 				<View style={this.styles.basicContainer}>
 					{!disableOverlay &&
@@ -238,6 +241,7 @@ class SimplePicker extends Component {
 					</View>
 				</View>
 			</Modal>
+		</SafeAreaView>
 		);
 	}
 }
