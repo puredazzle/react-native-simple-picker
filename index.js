@@ -13,6 +13,7 @@ import {
 	TouchableWithoutFeedback,
   Animated,
 	SafeAreaView,
+  Platform,
 } from 'react-native'; // eslint-disable-line
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -165,7 +166,7 @@ class SimplePicker extends Component {
 		});
     Animated.timing(
       this.state.translateY,
-      { toValue: -250 }
+      { toValue: Platform.OS === 'ios' ? -250 : -85 }
     ).start();
 	}
 
