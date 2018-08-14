@@ -3,11 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "react-native start",
+    "ios": "react-native run-ios",
+    "android": "react-native run-android"
   },
   "dependencies": {
-    "react": "^0.14.8",
-    "react-native": "^0.36.1",
+    "react": "^16.4.1",
+    "react-native": "^0.56.0",
     "react-native-simple-picker": "*"
   }
 }
