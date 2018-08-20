@@ -207,8 +207,7 @@ class SimplePicker extends Component {
     };
 
     return (
-      <SafeAreaView>
-        <Modal
+       <Modal
           transparent={true}
           visible={modalVisible}
           onRequestClose={this.onPressCancel}
@@ -219,6 +218,7 @@ class SimplePicker extends Component {
             <View style={this.styles.overlayContainer}/>
           </TouchableWithoutFeedback>
           }
+			<SafeAreaView>
           <Animated.View style={[this.styles.modalContainer, transformStyle]}>
             <View style={this.styles.buttonView}>
               <TouchableOpacity onPress={this.onPressCancel}>
@@ -243,8 +243,8 @@ class SimplePicker extends Component {
               </Picker>
             </View>
           </Animated.View>
+		</SafeAreaView>
         </Modal>
-      </SafeAreaView>
     );
 	}
 }
