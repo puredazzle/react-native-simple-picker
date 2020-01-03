@@ -96,7 +96,7 @@ class SimplePicker extends Component {
 		this.onOverlayDismiss = this.onOverlayDismiss.bind(this);
 	}
 
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
 		// If initial option index is changed we need to update the code.
 		if (nextProps.initialOptionIndex !== this.props.initialOptionIndex) {
 			this.setState({
