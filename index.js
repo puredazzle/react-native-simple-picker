@@ -8,13 +8,14 @@ import {
 	TouchableOpacity,
 	View,
 	Modal,
-	Picker,
 	Dimensions,
 	TouchableWithoutFeedback,
   Animated,
 	SafeAreaView,
   Platform,
 } from 'react-native'; // eslint-disable-line
+
+import { Picker } from '@react-native-picker/picker';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
