@@ -33,6 +33,7 @@
     "eslint-plugin-react-native": "^3.2.1"
   },
   "dependencies": {
+    "@react-native-picker/picker": "^2.1.0",
     "prop-types": "^15.5.10"
   }
 }
