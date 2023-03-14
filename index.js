@@ -167,14 +167,14 @@ class SimplePicker extends Component {
 		});
     Animated.timing(
       this.state.translateY,
-      { toValue: Platform.OS === 'ios' ? -250 : -85 }
+      { toValue: Platform.OS === 'ios' ? -250 : -85, useNativeDriver: true }
     ).start();
 	}
 
 	hide() {
     Animated.timing(
       this.state.translateY,
-      { toValue: 0 }
+      { toValue: 0, useNativeDriver: true }
     ).start(() => this.setState({ modalVisible: false }));
 	}
 
